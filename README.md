@@ -11,7 +11,7 @@ AGAST   https://docs.opencv.org/3.4/d7/d19/classcv_1_1AgastFeatureDetector.html
 
 BRIEF   https://docs.opencv.org/master/dc/d7d/tutorial_py_brief.html
 
-ORB     https://docs.opencv.org/3.4/db/d95/classcv_1_1ORB.html
+ORB     https://docs.opencv.org/3.4/db/d95/classcv_1_1ORB.html, https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_feature2d/py_orb/py_orb.html
 
 AKAZE   https://docs.opencv.org/3.4/d8/d30/classcv_1_1AKAZE.html
 
