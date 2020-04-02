@@ -39,9 +39,12 @@ def detectar(x):
         orb = cv.ORB_create(t)
         #Detecta los ragos
         kp = orb.detect(input_img, None)
-    #AKAZE Crashes
+
+    # No estoy seguro de que los parametros sean correctos
+    # Solo se obtiene respuesta con t=0
     elif metodo == '6':
-        akaze = cv.AKAZE_create(t)
+        #akaze = cv.AKAZE_create(t)
+        akaze = cv.AKAZE_create(cv.AKAZE_DESCRIPTOR_MLDB, 0, 3, t, 4, 4, cv.KAZE_DIFF_PM_G2)
         kp = akaze.detect(input_img, None)
     elif metodo == '7':
         brisk = cv.BRISK_create(t)
@@ -52,13 +55,13 @@ def detectar(x):
         kp = kaze.detect(input_img, None)
 
     #SIFT_y SURF son versiones no gratuitas
-    #parece haber un problema al acceder a ellas en PyCharm, el IDE que yo uso.
+    #Debido a esto se ha instalado la version 3.4.2.16 de OpenCV
     elif metodo == '9':
         sift = cv.xfeatures2d.SIFT_create(t)
-        kp = sift.detect(cv.cvtColor(input_img, cv.COLOR_BGR2GRAY), None)
+        kp = sift.detect(input_img, None)
     elif metodo == '10':
         surf = cv.xfeatures2d.SURF_create(t)
-        kp = surf.detect(cv.cvtColor(input_img, cv.COLOR_BGR2GRAY), None)
+        kp = surf.detect(input_img, None)
 
     else:
         return
