@@ -31,4 +31,8 @@ https://docs.opencv.org/master/dc/dc3/tutorial_py_matcher.html
 
 https://docs.opencv.org/3.4/db/d39/classcv_1_1DescriptorMatcher.html
 
+https://answers.opencv.org/question/10358/how-to-match-orb-descriptors-with-flann-lsh/
+
+https://docs.opencv.org/3.4/dc/de2/classcv_1_1FlannBasedMatcher.html
+
 
