@@ -1,6 +1,12 @@
 # Deteccion-y-Emparejamiento-de-Rasgos
 Avances en la Tarea de Programacion 1
 
+04/ABR:
+Los algoritmos tanto de deteccion como de emparejamiento ya han sido terminados, solo falta integrarlos
+dentro de un solo algoritmo.
+
+
+
 Documentacion para los distintos detectores:
 
 GFTT    https://docs.opencv.org/3.4/df/d21/classcv_1_1GFTTDetector.html , https://docs.opencv.org/master/d4/d8c/tutorial_py_shi_tomasi.html
