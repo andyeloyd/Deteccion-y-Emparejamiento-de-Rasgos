@@ -1,7 +1,9 @@
+# SIFT_y SURF son versiones no gratuitas en versiones recientes de OpenCV
+# Debido a esto se ha instalado la version 3.4.2.16
+
 import numpy as np
 import cv2 as cv
 import os.path
-#from matplotlib import pyplot as plt
 
 # Define variables globales
 input_img = np.zeros((480, 640, 3), np.uint8)
@@ -27,8 +29,6 @@ def detectar(x):
         agast = cv.AgastFeatureDetector_create(t)
         # Detecta los rasgos
         kp = agast.detect(input_img, None)
-
-    #Los siguientes metodos aun deben ser corroborados
     elif metodo == '4':
         #Crea un objeto tipo star(?)
         star = cv.xfeatures2d.StarDetector_create(t)
@@ -39,27 +39,26 @@ def detectar(x):
         orb = cv.ORB_create(t)
         #Detecta los ragos
         kp = orb.detect(input_img, None)
-
-    # No estoy seguro de que los parametros sean correctos
-    # Solo se obtiene respuesta con t=0
     elif metodo == '6':
-        #akaze = cv.AKAZE_create(t)
-        akaze = cv.AKAZE_create(cv.AKAZE_DESCRIPTOR_MLDB, 0, 3, t, 4, 4, cv.KAZE_DIFF_PM_G2)
+        # Crea un objeto tipo AKAZE, la funcion requiere valores mas bajos de t
+        akaze = cv.AKAZE_create(threshold=0.001*t)
         kp = akaze.detect(input_img, None)
+        print(t)
     elif metodo == '7':
+        # Crea un objeto tipo BRISK
         brisk = cv.BRISK_create(t)
         kp = brisk.detect(input_img, None)
-     #KAZE image doesnt seem to update
     elif metodo == '8':
-        kaze = cv.KAZE_create(t)
+        # Crea un objeto tipo KAZE, la funcion requiere valores mas bajos de t
+        kaze = cv.KAZE_create(threshold=0.001*t)
         kp = kaze.detect(input_img, None)
-
-    #SIFT_y SURF son versiones no gratuitas
-    #Debido a esto se ha instalado la version 3.4.2.16 de OpenCV
+        print(t)
     elif metodo == '9':
+        # Crea un objeto tipo SIFT
         sift = cv.xfeatures2d.SIFT_create(t)
         kp = sift.detect(input_img, None)
     elif metodo == '10':
+        # Crea un objeto tipo SURF
         surf = cv.xfeatures2d.SURF_create(t)
         kp = surf.detect(input_img, None)
 
