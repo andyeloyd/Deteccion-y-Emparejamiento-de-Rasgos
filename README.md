@@ -2,8 +2,9 @@
 Avances en la Tarea de Programacion 1
 
 04/ABR:
-Los algoritmos tanto de deteccion como de emparejamiento ya han sido terminados, solo falta integrarlos
-dentro de un solo algoritmo.
+
+Los algoritmos de deteccion y emparejamiento etsan ya funcionando, y ya se encuentran integrados dentro de un solo algoritmo, "detectAndMatch.py". Aun se realizaran algunos cambios, como limpiar el codigo, pero los programas ya son perfectamente capaces de realizar las tareas para los cuales fueron escritos.
+
 
 
 
