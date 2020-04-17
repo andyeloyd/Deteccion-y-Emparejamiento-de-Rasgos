@@ -5,58 +5,98 @@ Se desarrollo un algoritmo para la deteccion y emparejamiento de imagenes en Pyt
 capacidad para detectar los keypoints en una imagen segun el tipo de detector o de realizar un emparejamiento entre 2 imagenes segun el tipo detector y el metodo de emparejamiento.
 
 Los metodos disponibles para deteccion son:
+
 • Good Features to Track
+
 • FAST
+
 • BRIEF
+
 • ORB
+
 • AGAST
+
 • AKAZE
+
 • BRISK
+
 • KAZE
+
 • SIFT
+
 • SURF
 
+
 Para emparejamiento se dispone de los siguientes detectores:
+
 • SIFT
+
 • SURF
+
 • KAZE
+
 • BRIEF
+
 • BRISK
+
 • ORB
+
 • AKAZE
 
 Los metodos de emparejamiento incluidos en el algoritmo son:
+
 • Fuerza bruta (basado en L2 para descriptores de punto flotante y basado en hamming para descriptores binarios)
+
 • FLANN (KD-Trees con 5 arboles para descriptores de punto flotante y LSH para descriptores binarios)
 
 
 El algoritmo tiene el siguiente funcionamiento:
+
 -Se solicita al usuario el tipo de tarea a realizar (deteccion o emparejamiento de rasgos)
+
 -Se solicita la o las imagenes de entrada (solo una para deteccion, 2 para emparejamiento)
 
+
 Si se realiza deteccion:
+
 -Se pide al usuario el tipo de detector a usar
+
 -Se llama a la funcion de deteccion (con slider para variacion del parametro de threshold)
+
 -Se crean un objeto del tipo de detector seleccionado
+
 -Se extraen los keypoints de la imagen segun el detector
+
 -Se dibujan los keypoints en la imagen
 
+
 Si se realiza emparejamiento:
+
 -Se pide al usuario el tipo de descriptores a usar y el metodo de emparejamiento
+
 -Se llama a la funcion de emparajamiento
+
 -Se crea un objeto del tipo de descriptor/detector seleccionado
+
 -Se extraen los keypoints y descriptores de las imagenes segun el descriptor/detector
+
 -Se crea un objeto matcher segun el tipo de emparejamiento seleccionado
+
 -Se detectan los k vecinos mas cercanos en los descriptores segun el objeto matcher
+
 -Se filtran los emparejamientos debiles
+
 -Se dibuja los emparejamientos en el par de imagenes
 
-Observaciones:
+
+Observaciones
+
 Ya que los metodos SURF y SIFT de OpenCV no son gratuitos deben instalarse ciertas bibliotecas especificas para poder utilizarse.
 Sin embargo, se presentaron problemas de compatibilidad en el IDE en el cual este algoritmo fue desarrollado, PyCharm. Es por
 ello que se opto por intalar la version 3.4.2.16 de OpenCV, la cual si incluye estos metodos sin restriccion alguna.
 
 Conclusiones
+
 Se obtuvo un algoritmo capaz de realizar tanto deteccion como emparejamiento de rasgos en imagenes, a partir de los metodos
 solicitados por el usuario. En el caso de deteccion se presenta un slider para variar los parametros. Se obtuvo una buena respuesta
 por el programa, congruente con lo esperado teoricamente. 
