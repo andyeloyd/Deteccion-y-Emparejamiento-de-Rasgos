@@ -137,4 +137,7 @@ FLANN: https://docs.opencv.org/3.4/dc/de2/classcv_1_1FlannBasedMatcher.html
 
 Teoría LSH: https://en.wikipedia.org/wiki/Locality-sensitive_hashing
 
+Teoria KD-trees: https://stackoverflow.com/questions/5698036/how-does-it-work-comparing-matching-images-with-kd-trees-and-nearest-neighbor-se
+
+
 
