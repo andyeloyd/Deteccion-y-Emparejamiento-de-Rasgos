@@ -1,8 +1,3 @@
-# Este programa permite realizar deteccion o emparejamiento de rasgos
-# segun lo desee el usuario.
-# SIFT_y SURF son versiones no gratuitas en versiones recientes de OpenCV
-# Debido a esto se ha instalado la version 3.4.2.16
-
 import numpy as np
 import cv2 as cv
 import os.path
@@ -15,6 +10,7 @@ def detectar(x):
     # Crea un objeto de acuerdo al metodo seleccionado
     # y llama a la funcion para detectar los rasgos
     if metodo == '1':
+        # Crea un objeto "Good Features to Track"
         gftt = cv.GFTTDetector_create(0, 0.01, t, 3)
         kp = gftt.detect(input_img, None)
     elif metodo == '2':
@@ -28,7 +24,7 @@ def detectar(x):
         # Detecta los rasgos
         kp = agast.detect(input_img, None)
     elif metodo == '4':
-        #Crea un objeto tipo star(?)
+        #Crea un objeto tipo star(?) / BRIEF
         star = cv.xfeatures2d.StarDetector_create(t)
         #Detecta los rasgos
         kp = star.detect(input_img, None)
@@ -95,9 +91,8 @@ def matching(t):
     else:
         return
 
-    # Si se emplea BRIEF se realizan las operaciones de deteccion
+    # Si se emplea BRIEF, se realizan las operaciones de deteccion
     # y computacion por separado, pues BRIEF no posee metodo .detectAndCompute
-
     if detectMethod != '4':
         # Si no se usa BRIEF
         kp1, desc1 = detector.detectAndCompute(img1, None)
@@ -107,31 +102,39 @@ def matching(t):
         # Se detectan los rasgos con star
         kp1 = star.detect(img1, None)
         kp2 = star.detect(img1, None)
-        #Se obtienen los descriptores con brief
+        #Se obtienen los descriptores con BRIEF
         kp1, desc1 = detector.compute(img1, kp1)
         kp2, desc2 = detector.compute(img2, kp2)
 
+    # Si se usa emparejamiento por fuerza bruta
     if matchMethod == '1':
+        # Si se usa un descriptor con punto flotante, se usa distancia entre
+        # descriptores de norma L2
         if int(detectMethod) <= 3:
             matcher = cv.BFMatcher(cv.NORM_L2, crossCheck=False)
+        # Si se usa un descriptor binario, se usa distancia de hamming
         else:
             matcher = cv.BFMatcher(cv.NORM_HAMMING, crossCheck=False)
 
+    # Si se usa emparejamiento por FLANN
     elif matchMethod == '2':
+        # Si se usa descriptor de punto flotante, se usan KD-trees con 5 arboles
         if int(detectMethod) <= 3:
             FLANN_INDEX_KDTREE = 0
             index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
-            search_params = dict(checks=50)  # or pass empty dictionary
+            search_params = dict(checks=50)
             matcher = cv.FlannBasedMatcher(index_params, search_params)
 
+        # Si se usa un descriptor binario, se usa LSH
         else:
             FLANN_INDEX_LSH = 6
             index_params = dict(algorithm=FLANN_INDEX_LSH, table_number=6,
                                 key_size=12, multi_probe_level=1)
-            search_params = dict(checks=50)  # or pass empty dictionary
+            search_params = dict(checks=50)
             matcher = cv.FlannBasedMatcher(index_params, search_params)
     else:
         return
+    # Deteccion de los k vecinos mas cercanos
     matches = matcher.knnMatch(desc1, desc2, k=2, mask=None)
 
     # Filtrado de emparejamientos
@@ -140,10 +143,8 @@ def matching(t):
         if m.distance < t * n.distance:
             good_matches.append(m)
 
-    # Sort them in the order of their distance.
-    #good_matches = sorted(matches, key=lambda x: x.distance)
 
-    #Draw matches
+    # Se dibujan los emparejamientos en la imagen por medio de drawMatches
     img_matches = np.empty((max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], 3), dtype= np.uint8 )
     cv.drawMatches(img1, kp1, img2, kp2, good_matches, img_matches,
                    flags = cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
@@ -160,6 +161,7 @@ while (modo != '1' and modo != '2'):
     modo = input('¿Que tarea desea realizar?\n')
     pass
 
+# Deteccion de rasgos
 if modo =='1':
     # Abre la imagen definida por el usuario
     archivo = input('Nombre de la imagen a procesar: ')
@@ -184,6 +186,8 @@ if modo =='1':
         k = cv.waitKey(1) & 0xFF
         if k == 27:
             break
+
+# Emparejamiento de rasgos
 elif modo == '2':
     # Entrada de imagen de referencia
     archivo = input('Nombre de la imagen de referencia: \n')
@@ -209,6 +213,7 @@ elif modo == '2':
     print('Metodos de emparejamiento:\n (1) Fuerza Bruta\n (2) FLANN\n')
     matchMethod = input('Seleccione el metodo: ')
 
+    # Se llama a la funcion matching con un threshold default de 0.7
     matching(0.7)
 
     # Ciclo que espera un evento
